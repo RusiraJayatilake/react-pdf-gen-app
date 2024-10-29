@@ -138,9 +138,9 @@ const Invoice = () => {
           </Text>
         </View>
         <View>
-          <Text style={styles.addressTitle}>7, Ademola Odede, </Text>
-          <Text style={styles.addressTitle}>Ikeja,</Text>
-          <Text style={styles.addressTitle}>Lagos, Nigeria.</Text>
+          <Text style={styles.addressTitle}>47, Killybegs Drive, </Text>
+          <Text style={styles.addressTitle}>Pinehill,</Text>
+          <Text style={styles.addressTitle}>Auckland, New Zealand, 0632</Text>
         </View>
       </View>
     </View>
