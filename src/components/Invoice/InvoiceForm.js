@@ -2,21 +2,25 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import Layout from "../../layout";
+import { useNavigate } from "react-router-dom";
 
 const InvoiceForm = () => {
   const [formRows, setFormRows] = useState([
     { id: 1, item: "", quantity: "", price: "", amount: "" },
   ]);
   const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
 
   // handle form submission
   const onSubmit = (data) => {
-    const invoiceData = { ...data, invoiceItems: formRows };
+    const invoiceData = { ...data, invoiceItems: JSON.stringify(formRows) };
     // reset
     reset();
     // set default values
     setFormRows([{ id: 1, item: "", quantity: "", price: "", amount: "" }]);
-    console.log(invoiceData);
+
+    const params = new URLSearchParams(invoiceData).toString();
+    navigate(`/list?${params}`);
   };
 
   // add a row

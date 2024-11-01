@@ -119,6 +119,7 @@ const Invoice = () => {
     tbody2: { flex: 2, borderRightWidth: 1 },
   });
 
+  // company details
   const InvoiceTitle = () => (
     <View style={styles.titleContainer}>
       <View style={styles.spaceBetween}>
@@ -128,6 +129,7 @@ const Invoice = () => {
     </View>
   );
 
+  // company address
   const Address = () => (
     <View style={styles.titleContainer}>
       <View style={styles.spaceBetween}>
