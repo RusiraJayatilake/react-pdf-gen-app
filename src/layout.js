@@ -7,9 +7,7 @@ const Layout = ({ children }) => {
     <>
       <Navbar />
       <div className="container" style={{ marginTop: "100px" }}>
-        <div className="row justify-content-center align-items-center">
-          {children}
-        </div>
+        {children}
       </div>
       <Footer />
     </>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BlobProvider, PDFDownloadLink } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import Invoice from "./Invoice";
 import { saveAs } from "file-saver";
 import Layout from "../../layout";
@@ -9,11 +9,11 @@ import { useLocation } from "react-router-dom";
 import { CgFileDocument } from "react-icons/cg";
 import { HiOutlineDownload, HiOutlinePrinter } from "react-icons/hi";
 import { FiShare2 } from "react-icons/fi";
+import "../../assets/css/pdfCard.css";
 
-const PdfCard = ({ title }) => {
+const PdfCard = () => {
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  // console.log("URL Data: ", searchParams);
 
   //   const handleShare = async (blob) => {
   //     await saveAs(blob, `invoice.pdf`);
@@ -26,56 +26,108 @@ const PdfCard = ({ title }) => {
   const invoice_number = searchParams.get("invoice_number");
   const billing_address = searchParams.get("billing_address");
   const invoiceItems = JSON.parse(searchParams.get("invoiceItems") || "[]");
-  // console.log("invoice items: ", invoiceItems);
 
   return (
     <>
       <Layout>
-        <div className="col-lg-3">
-          <div className="card" style={{ width: "18rem" }}>
-            <div className="card-body">
-              <h5 className="card-title">{title}</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <PDFDownloadLink document={<Invoice />} fileName="invoice.pdf">
-                <div className="d-flex align-items-center gap-1">
-                  <HiOutlineDownload />
-                  <a>Download</a>
+        <div className="row justify-content-center align-items-center">
+          <div className="col col-sm-12">
+            <div className="card" style={{ width: "20rem" }}>
+              <div className="card-body">
+                {/* PDF Preview */}
+                <div>
+                  <BlobProvider
+                    document={
+                      <Invoice
+                        date={date}
+                        invoiceNumber={invoice_number}
+                        billingAddress={billing_address}
+                        invoiceData={invoiceItems}
+                      />
+                    }
+                    className="pdf-viewer"
+                  >
+                    {({ blog, url, loading, error }) => {
+                      if (loading) return <p>Loading</p>;
+                      if (error) return <p>Error Loading!</p>;
+                      return (
+                        <img
+                          src={url}
+                          alt="pdf preview"
+                          style={{ width: "100%", height: "auto" }}
+                        />
+                      );
+                    }}
+                  </BlobProvider>
                 </div>
-              </PDFDownloadLink>
 
-              <BlobProvider document={<Invoice />}>
-                {({ url }) => (
-                  <a href={url} target="_blank">
-                    <HiOutlinePrinter size={14} />
-                    <span>Print</span>
-                  </a>
-                )}
-              </BlobProvider>
-            </div>
-          </div>
-        </div>
-        <div className="row mt-5">
-          <div className="col-md-6">
-            <ul>
-              <li>Date: {date}</li>
-              <li>Invoice Number: {invoice_number}</li>
-              <li>Billing Address: {billing_address}</li>
-              {invoiceItems.map((value, index) => (
-                <ul key={index}>
-                  <div className="row">
-                    <div className="col">
-                      <li>{value.item}</li>
-                      <li>{value.quantity}</li>
-                      <li>{value.price}</li>
-                      <li>{value.amount}</li>
+                <h6 className="card-title mt-4">
+                  Created At: {new Date().toLocaleDateString()}
+                </h6>
+
+                <div className="d-flex justify-content-between">
+                  {/* Download */}
+                  <PDFDownloadLink
+                    document={
+                      <Invoice
+                        date={date}
+                        invoiceNumber={invoice_number}
+                        billingAddress={billing_address}
+                        invoiceData={invoiceItems}
+                      />
+                    }
+                    fileName="invoice.pdf"
+                  >
+                    <div className="d-flex align-items-center btn btn-light">
+                      <HiOutlineDownload size={14} />
+                      <span>Download</span>
                     </div>
-                  </div>
-                </ul>
-              ))}
-            </ul>
+                  </PDFDownloadLink>
+
+                  {/* Print */}
+                  <BlobProvider
+                    document={
+                      <Invoice
+                        date={date}
+                        invoiceNumber={invoice_number}
+                        billingAddress={billing_address}
+                        invoiceData={invoiceItems}
+                      />
+                    }
+                  >
+                    {({ url }) => (
+                      <a
+                        href={url}
+                        target="_blank"
+                        className="d-flex align-items-center btn btn-light"
+                      >
+                        <HiOutlinePrinter size={14} />
+                        <span>Print</span>
+                      </a>
+                    )}
+                  </BlobProvider>
+
+                  {/* Share */}
+                  <BlobProvider
+                    document={
+                      <Invoice
+                        date={date}
+                        invoiceNumber={invoice_number}
+                        billingAddress={billing_address}
+                        invoiceData={invoiceItems}
+                      />
+                    }
+                  >
+                    {({ url }) => (
+                      <div className="d-flex align-items-center btn btn-light">
+                        <HiOutlinePrinter size={14} />
+                        <span>Share</span>
+                      </div>
+                    )}
+                  </BlobProvider>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Layout>

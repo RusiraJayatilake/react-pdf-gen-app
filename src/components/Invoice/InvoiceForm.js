@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const InvoiceForm = () => {
   const [formRows, setFormRows] = useState([
-    { id: 1, item: "", quantity: "", price: "", amount: "" },
+    { id: 1, item: "", quantity: "", price: "" },
   ]);
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const InvoiceForm = () => {
     // reset
     reset();
     // set default values
-    setFormRows([{ id: 1, item: "", quantity: "", price: "", amount: "" }]);
+    setFormRows([{ id: 1, item: "", quantity: "", price: "" }]);
 
     const params = new URLSearchParams(invoiceData).toString();
     navigate(`/list?${params}`);
@@ -32,7 +32,6 @@ const InvoiceForm = () => {
         item: "",
         quantity: "",
         price: "",
-        amount: "",
       },
     ]);
   };
@@ -46,148 +45,132 @@ const InvoiceForm = () => {
 
   return (
     <Layout>
-      <div className="col-lg-8 col-sm-12">
-        <h2>Add an Invoice</h2>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="card mt-3 py-4 px-4 shadow-sm"
-        >
-          <div className="mb-3">
-            <label className="form-label">Date</label>
-            <input
-              type="date"
-              {...register("date")}
-              className="form-control"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Invoice Number</label>
-            <input
-              type="number"
-              {...register("invoice_number")}
-              className="form-control"
-              min="0.00"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Billing Address</label>
-            <input
-              type="text"
-              {...register("billing_address")}
-              className="form-control"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Invoice Details</label>
+      <div className="row justify-content-center align-items-center">
+        <div className="col-lg-8 col-sm-12">
+          <h2>Add an Invoice</h2>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="card mt-3 py-4 px-4 shadow-sm"
+          >
             <div className="mb-3">
-              <div className="container">
-                <div className="row mb-2 align-items-center">
-                  {formRows.map((row) => (
-                    <>
-                      <div className="col-md-5 col-sm-4">
-                        <label className="form-label">Items</label>
-                        <input
-                          type="text"
-                          value={row.item}
-                          onChange={(e) =>
-                            handleAddRowInputChanges(
-                              row.id,
-                              "item",
-                              e.target.value
-                            )
-                          }
-                          className="form-control"
-                          required
-                        />
+              <label className="form-label">Date</label>
+              <input
+                type="date"
+                {...register("date")}
+                className="form-control"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Invoice Number</label>
+              <input
+                type="number"
+                {...register("invoice_number")}
+                className="form-control"
+                min="0.00"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Billing Address</label>
+              <input
+                type="text"
+                {...register("billing_address")}
+                className="form-control"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Invoice Details</label>
+              <div className="mb-3">
+                <div className="container">
+                  <div className="row mb-2 align-items-center">
+                    {formRows.map((row) => (
+                      <>
+                        <div className="col-md-5 col-sm-4">
+                          <label className="form-label">Items</label>
+                          <input
+                            type="text"
+                            value={row.item}
+                            onChange={(e) =>
+                              handleAddRowInputChanges(
+                                row.id,
+                                "item",
+                                e.target.value
+                              )
+                            }
+                            className="form-control"
+                            required
+                          />
+                        </div>
+                        <div className="col-md-2">
+                          <label className="form-label">Price</label>
+                          <input
+                            type="decimal"
+                            value={row.price}
+                            onChange={(e) =>
+                              handleAddRowInputChanges(
+                                row.id,
+                                "price",
+                                e.target.value
+                              )
+                            }
+                            className="form-control"
+                            min="0.00"
+                            max="10000.00"
+                            required
+                          />
+                        </div>
+                        <div className="col-md-2">
+                          <label className="form-label">Qty</label>
+                          <input
+                            type="number"
+                            value={row.quantity}
+                            onChange={(e) =>
+                              handleAddRowInputChanges(
+                                row.id,
+                                "quantity",
+                                e.target.value
+                              )
+                            }
+                            className="form-control"
+                            min="0.00"
+                            max="10000.00"
+                            required
+                          />
+                        </div>
+
+                        <div className="col">
+                          <IoMdClose
+                            size={25}
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                              setFormRows(
+                                formRows.filter((fr) => fr.id !== row.id)
+                              )
+                            }
+                          />
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                  <div className="row align-items-center">
+                    <div className="col">
+                      <div onClick={addRow} style={{ cursor: "pointer" }}>
+                        <IoMdAdd size={20} />
+                        <span>Add Items</span>
                       </div>
-                      <div className="col-md-2">
-                        <label className="form-label">Price</label>
-                        <input
-                          type="decimal"
-                          value={row.price}
-                          onChange={(e) =>
-                            handleAddRowInputChanges(
-                              row.id,
-                              "price",
-                              e.target.value
-                            )
-                          }
-                          className="form-control"
-                          min="0.00"
-                          max="10000.00"
-                          required
-                        />
-                      </div>
-                      <div className="col-md-2">
-                        <label className="form-label">Qty</label>
-                        <input
-                          type="number"
-                          value={row.quantity}
-                          onChange={(e) =>
-                            handleAddRowInputChanges(
-                              row.id,
-                              "quantity",
-                              e.target.value
-                            )
-                          }
-                          className="form-control"
-                          min="0.00"
-                          max="10000.00"
-                          required
-                        />
-                      </div>
-                      <div className="col-md-2">
-                        <label className="form-label">Amount</label>
-                        <input
-                          type="number"
-                          value={row.amount}
-                          onChange={(e) =>
-                            handleAddRowInputChanges(
-                              row.id,
-                              "amount",
-                              e.target.value
-                            )
-                          }
-                          className="form-control"
-                          min="0.00"
-                          max="10000.00"
-                          step=".01"
-                          required
-                        />
-                      </div>
-                      <div className="col">
-                        <IoMdClose
-                          size={25}
-                          style={{ cursor: "pointer" }}
-                          onClick={() =>
-                            setFormRows(
-                              formRows.filter((fr) => fr.id !== row.id)
-                            )
-                          }
-                        />
-                      </div>
-                    </>
-                  ))}
-                </div>
-                <div className="row align-items-center">
-                  <div className="col">
-                    <div onClick={addRow} style={{ cursor: "pointer" }}>
-                      <IoMdAdd size={20} />
-                      <span>Add Items</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </Layout>
   );

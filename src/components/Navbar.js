@@ -6,7 +6,8 @@ const Navbar = () => {
   const [isToggled, setIsToggled] = useState(false);
   const navData = [
     { title: "Add Invoice", link: "/" },
-    { title: "Sample Invoices", link: "/list" },
+    { title: "Company Form", link: "/company" },
+    { title: "Invoices", link: "/list" },
   ];
 
   const handleToggleMenu = () => {

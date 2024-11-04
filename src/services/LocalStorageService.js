@@ -1,7 +1,9 @@
 class LocalStorageService {
-  async setData() {}
+  async setLocalDbData(setData) {
+    localStorage.setItem(setData);
+  }
 
-  async getData() {}
+  async getLocalDbData() {}
 }
 
 const localstorage = new LocalStorageService();
