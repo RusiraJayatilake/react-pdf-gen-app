@@ -6,12 +6,12 @@ import Layout from "../../layout";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // icons
-import { CgFileDocument } from "react-icons/cg";
 import {
   HiOutlineDownload,
   HiOutlinePrinter,
   HiOutlinePlus,
-  HiX,
+  HiOutlineX,
+  HiOutlinePencil,
 } from "react-icons/hi";
 import { FiShare2 } from "react-icons/fi";
 import "../../assets/css/pdfCard.css";
@@ -50,11 +50,11 @@ const PdfCard = () => {
           <div className="col col-sm-12">
             <div
               className="card"
-              style={{ width: "25rem", position: "relative", top: 0, right: 0 }}
+              style={{ width: "18rem", position: "relative", top: 0, right: 0 }}
             >
               <div className="card-body">
                 {/* PDF Preview */}
-                {/* <div>
+                <div>
                   <BlobProvider
                     document={
                       <Invoice
@@ -81,127 +81,121 @@ const PdfCard = () => {
                       );
                     }}
                   </BlobProvider>
-                </div> */}
-
+                </div>
+                {/* Title */}
                 <h6 className="card-title mt-4">
                   Created At: {new Date().toLocaleDateString()}
                 </h6>
 
                 <div className="d-flex justify-content-between">
-                  {/* Download */}
-                  <PDFDownloadLink
-                    document={
-                      <Invoice
-                        date={date}
-                        invoiceNumber={invoice_number}
-                        billingAddress={billing_address}
-                        invoiceData={invoiceItems}
-                        companyLogo={company_logo}
-                        companyName={company_name}
-                        companyAddress={company_address}
-                      />
-                    }
-                    fileName="invoice.pdf"
-                  >
-                    <div className="d-flex align-items-center btn btn-light">
-                      <HiOutlineDownload size={14} />
-                      <span>Download</span>
-                    </div>
-                  </PDFDownloadLink>
-
-                  {/* Print */}
-                  <BlobProvider
-                    document={
-                      <Invoice
-                        date={date}
-                        invoiceNumber={invoice_number}
-                        billingAddress={billing_address}
-                        invoiceData={invoiceItems}
-                        companyLogo={company_logo}
-                        companyName={company_name}
-                        companyAddress={company_address}
-                      />
-                    }
-                  >
-                    {({ url }) => (
-                      <a
-                        href={url}
-                        target="_blank"
-                        className="d-flex align-items-center btn btn-light"
-                      >
-                        <HiOutlinePrinter size={14} />
-                        <span>Print</span>
-                      </a>
-                    )}
-                  </BlobProvider>
-
-                  {/* Share */}
-                  <BlobProvider
-                    document={
-                      <Invoice
-                        date={date}
-                        invoiceNumber={invoice_number}
-                        billingAddress={billing_address}
-                        invoiceData={invoiceItems}
-                        companyLogo={company_logo}
-                        companyName={company_name}
-                        companyAddress={company_address}
-                      />
-                    }
-                  >
-                    {({ url }) => (
-                      <div className="d-flex align-items-center btn btn-light">
-                        <FiShare2 size={14} />
-                        <span>Share</span>
+                  <div className="d-flex gap-2">
+                    {/* Download */}
+                    <PDFDownloadLink
+                      document={
+                        <Invoice
+                          date={date}
+                          invoiceNumber={invoice_number}
+                          billingAddress={billing_address}
+                          invoiceData={invoiceItems}
+                          companyLogo={company_logo}
+                          companyName={company_name}
+                          companyAddress={company_address}
+                        />
+                      }
+                      fileName="invoice.pdf"
+                    >
+                      <div className="btn btn-outline-success btn-circle">
+                        <HiOutlineDownload size={14} />
                       </div>
-                    )}
-                  </BlobProvider>
+                    </PDFDownloadLink>
 
-                  {/* Edit */}
-                  <BlobProvider
-                    document={
-                      <Invoice
-                        date={date}
-                        invoiceNumber={invoice_number}
-                        billingAddress={billing_address}
-                        invoiceData={invoiceItems}
-                        companyLogo={company_logo}
-                        companyName={company_name}
-                        companyAddress={company_address}
-                      />
-                    }
-                  >
-                    {({ url }) => (
-                      <div className="d-flex align-items-center btn btn-light">
-                        <HiOutlinePrinter size={14} />
-                        <span>Edit</span>
-                      </div>
-                    )}
-                  </BlobProvider>
-                </div>
-                {/* Add Invoice */}
-                <div className="mt-3">
-                  <button
-                    className="btn btn-light"
-                    onClick={handleAddInvoiceButton}
-                  >
-                    <div className="d-flex align-items-center">
+                    {/* Print */}
+                    <BlobProvider
+                      document={
+                        <Invoice
+                          date={date}
+                          invoiceNumber={invoice_number}
+                          billingAddress={billing_address}
+                          invoiceData={invoiceItems}
+                          companyLogo={company_logo}
+                          companyName={company_name}
+                          companyAddress={company_address}
+                        />
+                      }
+                    >
+                      {({ url }) => (
+                        <a
+                          href={url}
+                          target="_blank"
+                          className="btn btn-outline-success btn-circle"
+                        >
+                          <HiOutlinePrinter size={14} />
+                        </a>
+                      )}
+                    </BlobProvider>
+
+                    {/* Share */}
+                    <BlobProvider
+                      document={
+                        <Invoice
+                          date={date}
+                          invoiceNumber={invoice_number}
+                          billingAddress={billing_address}
+                          invoiceData={invoiceItems}
+                          companyLogo={company_logo}
+                          companyName={company_name}
+                          companyAddress={company_address}
+                        />
+                      }
+                    >
+                      {({ url }) => (
+                        <div className="btn btn-outline-success btn-circle">
+                          <FiShare2 size={14} />
+                        </div>
+                      )}
+                    </BlobProvider>
+
+                    {/* Edit */}
+                    <BlobProvider
+                      document={
+                        <Invoice
+                          date={date}
+                          invoiceNumber={invoice_number}
+                          billingAddress={billing_address}
+                          invoiceData={invoiceItems}
+                          companyLogo={company_logo}
+                          companyName={company_name}
+                          companyAddress={company_address}
+                        />
+                      }
+                    >
+                      {({ url }) => (
+                        <div className="btn btn-outline-success btn-circle">
+                          <HiOutlinePencil size={14} />
+                        </div>
+                      )}
+                    </BlobProvider>
+
+                    {/* Add Invoice */}
+                    <button
+                      className="btn btn-outline-success btn-circle"
+                      onClick={handleAddInvoiceButton}
+                    >
                       <HiOutlinePlus size={14} />
-                      <span>Add</span>
-                    </div>
-                  </button>
-                </div>
+                    </button>
+                  </div>
 
-                <HiX
-                  style={{
-                    position: "absolute",
-                    top: "-10px",
-                    right: "-10px",
-                    cursor: "pointer",
-                  }}
-                  size={20}
-                  onClick={() => alert("Closed Clicked")}
-                />
+                  <HiOutlineX
+                    style={{
+                      position: "absolute",
+                      top: "-10px",
+                      right: "-10px",
+                      cursor: "pointer",
+                    }}
+                    size={20}
+                    onClick={() => alert("Closed Clicked")}
+                  />
+                </div>
               </div>
             </div>
           </div>
