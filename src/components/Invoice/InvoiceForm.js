@@ -20,7 +20,7 @@ const InvoiceForm = () => {
     setFormRows([{ id: 1, item: "", quantity: "", price: "" }]);
 
     const params = new URLSearchParams(invoiceData).toString();
-    navigate(`/list?${params}`);
+    navigate(`/invoice-list?${params}`);
   };
 
   // add a row
@@ -36,7 +36,7 @@ const InvoiceForm = () => {
     ]);
   };
 
-  // handle input changes
+  // handle add row input changes
   const handleAddRowInputChanges = (id, field, value) => {
     setFormRows((prevRows) =>
       prevRows.map((row) => (row.id === id ? { ...row, [field]: value } : row))

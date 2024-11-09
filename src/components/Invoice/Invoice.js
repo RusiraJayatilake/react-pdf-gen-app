@@ -9,7 +9,15 @@ import {
 } from "@react-pdf/renderer";
 import logo from "../../assets/images/Logo.png";
 
-const Invoice = ({ date, invoiceNumber, billingAddress, invoiceData }) => {
+const Invoice = ({
+  date,
+  invoiceNumber,
+  billingAddress,
+  invoiceData,
+  companyLogo,
+  companyName,
+  companyAddress,
+}) => {
   const styles = StyleSheet.create({
     page: {
       fontSize: 11,
@@ -84,8 +92,8 @@ const Invoice = ({ date, invoiceNumber, billingAddress, invoiceData }) => {
   const InvoiceTitle = () => (
     <View style={styles.titleContainer}>
       <View style={styles.spaceBetween}>
-        <Image style={styles.logo} src={logo} />
-        <Text style={styles.reportTitle}>Xpress Enterprises</Text>
+        <Image style={styles.logo} src={companyLogo} />
+        <Text style={styles.reportTitle}>{companyName}</Text>
       </View>
     </View>
   );
@@ -101,9 +109,9 @@ const Invoice = ({ date, invoiceNumber, billingAddress, invoiceData }) => {
           </Text>
         </View>
         <View>
-          <Text style={styles.addressTitle}>47, Killybegs Drive, </Text>
-          <Text style={styles.addressTitle}>Pinehill,</Text>
-          <Text style={styles.addressTitle}>Auckland, New Zealand, 0632</Text>
+          <Text style={styles.addressTitle}>{companyAddress}</Text>
+          {/* <Text style={styles.addressTitle}>Pinehill,</Text>
+          <Text style={styles.addressTitle}>Auckland, New Zealand, 0632</Text> */}
         </View>
       </View>
     </View>

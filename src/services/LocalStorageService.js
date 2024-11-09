@@ -1,10 +1,21 @@
-class LocalStorageService {
-  async setLocalDbData(setData) {
-    localStorage.setItem(setData);
-  }
+import { useEffect } from "react";
 
-  async getLocalDbData() {}
-}
+// const LocalStroageService = (storeKey, fallbackState) => {
+//   const [value, setValue] = useState(
+//     JSON.parse(localStorage.getItem(storeKey)) ?? fallbackState
+//   );
 
-const localstorage = new LocalStorageService();
-export default localstorage;
+//   useEffect(() => {
+//     localStorage.setItem(storeKey, JSON.stringify(value));
+//   }, [value, setValue]);
+// };
+
+// export default LocalStroageService;
+
+export const LocalStroageService = ({ value, localStorageKey }) => {
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(value));
+  }, [value, localStorageKey]);
+
+  return;
+};
