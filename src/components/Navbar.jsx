@@ -5,7 +5,6 @@ import "../assets/css/navbar.css";
 const Navbar = () => {
   const [isToggled, setIsToggled] = useState(false);
   const navData = [
-    // { title: "Add Invoice", link: "/add-" },
     { title: "Company Form", link: "/" },
     { title: "Invoices", link: "/invoice-list" },
   ];

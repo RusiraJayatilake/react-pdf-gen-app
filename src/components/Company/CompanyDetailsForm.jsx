@@ -2,25 +2,13 @@ import React from "react";
 import Layout from "../../layout";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import useFormPersist from "react-hook-form-persist";
-
-const initialValue = {
-  company_logo: null,
-  company_name: "",
-  company_address: "",
-};
+import PageHelmet from "../Helmet";
+import useLocalStorageService from "../../services/LocalStorageService";
 
 const CompanyDetailsForm = () => {
-  const { register, handleSubmit, reset, watch, setValue } = useForm({
-    defaultValues: initialValue,
-  });
+  const { register, handleSubmit, reset } = useForm();
+  const { addInvoice } = useLocalStorageService();
   const navigate = useNavigate();
-
-  useFormPersist("company-form", {
-    watch,
-    setValue,
-    storage: window.localStorage,
-  });
 
   const onSubmit = (data) => {
     const file = data.company_logo[0];
@@ -33,7 +21,8 @@ const CompanyDetailsForm = () => {
     };
 
     // save submitted data to localstorage
-    localStorage.setItem("company-form", JSON.stringify(companyData));
+    // localStorage.setItem("company-form", JSON.stringify(companyData));
+    addInvoice(companyData);
 
     const params = new URLSearchParams(companyData).toString();
     navigate(`/invoice-list?${params}`);
@@ -43,6 +32,7 @@ const CompanyDetailsForm = () => {
 
   return (
     <>
+      <PageHelmet pageTitle={"Company Info"} />
       <Layout>
         <div className="row justify-content-center align-items-center">
           <div className="col-lg-8 col-sm-12">

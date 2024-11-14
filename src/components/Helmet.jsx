@@ -1,12 +1,18 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
-const Helmet = ({ pageTitle }) => {
+const PageHelmet = ({ pageTitle }) => {
   return (
     <>
-      <meta charSet="utf-8" />
-      <title>{pageTitle}</title>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta
+          name="description"
+          content="This is React Single Page App for Invoice Gen"
+        />
+      </Helmet>
     </>
   );
 };
 
-export default Helmet;
+export default PageHelmet;

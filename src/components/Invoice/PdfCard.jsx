@@ -15,6 +15,7 @@ import {
 } from "react-icons/hi";
 import { FiShare2 } from "react-icons/fi";
 import "../../assets/css/pdfCard.css";
+import PageHelmet from "../Helmet";
 
 const PdfCard = () => {
   let location = useLocation();
@@ -45,12 +46,18 @@ const PdfCard = () => {
 
   return (
     <>
+      <PageHelmet pageTitle={"Invoices"} />
       <Layout>
         <div className="row justify-content-center align-items-center">
-          <div className="col col-sm-12">
+          <div className="col col-sm-12 d-flex justify-content-center">
             <div
               className="card"
-              style={{ width: "18rem", position: "relative", top: 0, right: 0 }}
+              style={{
+                width: "18rem",
+                position: "relative",
+                top: 0,
+                right: 0,
+              }}
             >
               <div className="card-body">
                 {/* PDF Preview */}
@@ -104,7 +111,7 @@ const PdfCard = () => {
                       }
                       fileName="invoice.pdf"
                     >
-                      <div className="btn btn-outline-success btn-circle">
+                      <div className="btn btn-outline-success rounded-circle">
                         <HiOutlineDownload size={14} />
                       </div>
                     </PDFDownloadLink>
@@ -127,7 +134,7 @@ const PdfCard = () => {
                         <a
                           href={url}
                           target="_blank"
-                          className="btn btn-outline-success btn-circle"
+                          className="btn btn-outline-success rounded-circle"
                         >
                           <HiOutlinePrinter size={14} />
                         </a>
@@ -149,7 +156,7 @@ const PdfCard = () => {
                       }
                     >
                       {({ url }) => (
-                        <div className="btn btn-outline-success btn-circle">
+                        <div className="btn btn-outline-success rounded-circle">
                           <FiShare2 size={14} />
                         </div>
                       )}
@@ -170,7 +177,7 @@ const PdfCard = () => {
                       }
                     >
                       {({ url }) => (
-                        <div className="btn btn-outline-success btn-circle">
+                        <div className="btn btn-outline-success rounded-circle">
                           <HiOutlinePencil size={14} />
                         </div>
                       )}
@@ -178,7 +185,7 @@ const PdfCard = () => {
 
                     {/* Add Invoice */}
                     <button
-                      className="btn btn-outline-success btn-circle"
+                      className="btn btn-outline-success rounded-circle"
                       onClick={handleAddInvoiceButton}
                     >
                       <HiOutlinePlus size={14} />
