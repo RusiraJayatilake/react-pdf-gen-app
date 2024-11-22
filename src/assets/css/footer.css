@@ -1,0 +1,9 @@
+.company-name {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.company-name:hover {
+  text-decoration: underline;
+}

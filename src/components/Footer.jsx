@@ -1,5 +1,6 @@
 import React from "react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import "../assets/css/footer.css";
 
 const Footer = () => {
   const footerData = [
@@ -24,7 +25,8 @@ const Footer = () => {
             ))}
           </ul>
           <p className="text-center">
-            &copy; {new Date().getFullYear()} CrystalLabs. All Rights Reserved.
+            &copy; {new Date().getFullYear()}{" "}
+            <a className="company-name">CrystalLabs.</a> All Rights Reserved.
           </p>
         </footer>
       </div>

@@ -21,12 +21,11 @@ const CompanyDetailsForm = () => {
     };
 
     // save submitted data to localstorage
-    // localStorage.setItem("company-form", JSON.stringify(companyData));
     addInvoice(companyData);
 
     const params = new URLSearchParams(companyData).toString();
     navigate(`/invoice-list?${params}`);
-    URL.revokeObjectURL(companyImgUrl);
+
     reset();
   };
 

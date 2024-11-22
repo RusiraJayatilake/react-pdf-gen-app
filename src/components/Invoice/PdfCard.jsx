@@ -33,6 +33,7 @@ const PdfCard = () => {
     navigate("/add-invoice");
   };
 
+  // Data extractions
   //company data
   const company_logo = searchParams.get("companyImg");
   const company_name = searchParams.get("company_name");
