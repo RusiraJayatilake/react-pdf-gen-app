@@ -1,41 +1,45 @@
 import React from "react";
 import Layout from "../../layout";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import PageHelmet from "../Helmet";
-import useLocalStorageService from "../../services/LocalStorageService";
+import { db } from "../../config/firebase-config";
+import { addDoc, collection } from "firebase/firestore";
 
 const CompanyDetailsForm = () => {
   const { register, handleSubmit, reset } = useForm();
-  const { addInvoice } = useLocalStorageService();
-  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    const file = data.company_logo[0];
-    const companyImgUrl = URL.createObjectURL(file);
+  const onSubmit = async (data) => {
+    try {
+      // validate image file uploaded
+      if (!data.company_logo || data.company_logo.length === 0) {
+        throw new Error("Plase upload a company logo");
+      }
 
-    const companyData = {
-      company_name: data.company_name,
-      company_address: data.company_address,
-      companyImg: companyImgUrl,
-    };
+      const file = data.company_logo[0];
+      const companyImgUrl = URL.createObjectURL(file);
 
-    // save submitted data to localstorage
-    addInvoice(companyData);
+      const companyData = {
+        company_name: data.company_name,
+        company_address: data.company_address,
+        companyImg: companyImgUrl,
+      };
 
-    const params = new URLSearchParams(companyData).toString();
-    navigate(`/invoice-list?${params}`);
+      // save data to firebase
+      await addDoc(collection(db, "company"), companyData);
 
-    reset();
+      reset();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <>
-      <PageHelmet pageTitle={"Company Info"} />
+      <PageHelmet pageTitle={"Company"} />
       <Layout>
         <div className="row justify-content-center align-items-center">
           <div className="col-lg-8 col-sm-12">
-            <h2>Add Company Data</h2>
+            <h2>Add Company Info</h2>
 
             <form
               className="card mt-3 py-4 px-4 shadow-sm"

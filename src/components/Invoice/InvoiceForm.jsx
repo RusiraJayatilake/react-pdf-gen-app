@@ -5,24 +5,33 @@ import Layout from "../../layout";
 import { useNavigate } from "react-router-dom";
 import PageHelmet from "../Helmet";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import { db } from "../../config/firebase-config";
+import { addDoc, collection } from "firebase/firestore";
 
 const InvoiceForm = () => {
   const [formRows, setFormRows] = useState([
     { id: 1, item: "", quantity: "", price: "" },
   ]);
   const { register, handleSubmit, reset } = useForm();
-  const navigate = useNavigate();
 
   // handle form submission
-  const onSubmit = (data) => {
-    const invoiceData = { ...data, invoiceItems: JSON.stringify(formRows) };
-    // reset
-    reset();
-    // set default values
-    setFormRows([{ id: 1, item: "", quantity: "", price: "" }]);
+  const onSubmit = async (data) => {
+    try {
+      await addDoc(collection(db, "pdf"), {
+        data: { ...data, formRows },
+      });
+      // reset
+      reset();
+      // set default values
+      setFormRows([{ id: 1, item: "", quantity: "", price: "" }]);
+    } catch (err) {
+      console.error(err);
+    }
 
-    const params = new URLSearchParams(invoiceData).toString();
-    navigate(`/invoice-list?${params}`);
+    // const invoiceData = { ...data, invoiceItems: JSON.stringify(formRows) };
+
+    // const params = new URLSearchParams(invoiceData).toString();
+    // navigate(`/invoice-list?${params}`);
   };
 
   // add a row

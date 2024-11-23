@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import Invoice from "./Invoice";
 import { saveAs } from "file-saver";
@@ -16,8 +16,11 @@ import {
 import { FiShare2 } from "react-icons/fi";
 import "../../assets/css/pdfCard.css";
 import PageHelmet from "../Helmet";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebase-config";
 
 const PdfCard = () => {
+  const [pdfData, setPdfData] = useState([]);
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ const PdfCard = () => {
 
   // Data extractions
   //company data
-  const company_logo = searchParams.get("companyImg");
+  // const company_logo = searchParams.get("companyImg");
   const company_name = searchParams.get("company_name");
   const company_address = searchParams.get("company_address");
 
@@ -44,6 +47,25 @@ const PdfCard = () => {
   const invoice_number = searchParams.get("invoice_number");
   const billing_address = searchParams.get("billing_address");
   const invoiceItems = JSON.parse(searchParams.get("invoiceItems") || "[]");
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "company"));
+        const newData = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+
+        setPdfData(newData);
+        console.log("Fetched pdf:", newData);
+      } catch (error) {
+        console.error("Error fetching pdf data:", error);
+      }
+    };
+
+    fetchPost();
+  }, []);
 
   return (
     <>
@@ -62,6 +84,10 @@ const PdfCard = () => {
             >
               <div className="card-body">
                 {/* PDF Preview */}
+                {pdfData.map((value) => (
+                  <img src={value.companyImg} alt="Image" />
+                ))}
+
                 <div>
                   <BlobProvider
                     document={
@@ -70,7 +96,7 @@ const PdfCard = () => {
                         invoiceNumber={invoice_number}
                         billingAddress={billing_address}
                         invoiceData={invoiceItems}
-                        companyLogo={company_logo}
+                        // companyLogo={company_logo}
                         companyName={company_name}
                         companyAddress={company_address}
                       />
@@ -105,7 +131,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          companyLogo={company_logo}
+                          // companyLogo={company_logo}
                           companyName={company_name}
                           companyAddress={company_address}
                         />
@@ -125,7 +151,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          companyLogo={company_logo}
+                          // companyLogo={company_logo}
                           companyName={company_name}
                           companyAddress={company_address}
                         />
@@ -150,7 +176,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          companyLogo={company_logo}
+                          // companyLogo={company_logo}
                           companyName={company_name}
                           companyAddress={company_address}
                         />
@@ -171,7 +197,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          companyLogo={company_logo}
+                          // companyLogo={company_logo}
                           companyName={company_name}
                           companyAddress={company_address}
                         />
