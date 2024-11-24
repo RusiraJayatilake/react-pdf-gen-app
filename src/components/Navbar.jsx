@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isToggled, setIsToggled] = useState(false);
 
   const navData = [
-    { title: "Company", link: "/" },
+    { title: "Company", link: "/company" },
     { title: "Invoices", link: "/invoice-list" },
   ];
 

@@ -1,7 +1,14 @@
 import React from "react";
 import Footer from "../Footer";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
+
+  const handleGetStart = () => {
+    navigate("/company");
+  };
+
   return (
     <>
       <div className="container col-sm-12 col-xl-10 col-xxl-7 px-4 py-5">
@@ -14,7 +21,11 @@ const SignUpForm = () => {
               be triggered by attempting to submit the form without completing
               it.
             </p>
-            <button className="btn btn-md btn-primary my-3 mb-5" type="submit">
+            <button
+              className="btn btn-md btn-primary my-3 mb-5"
+              type="submit"
+              onClick={handleGetStart}
+            >
               Get Started
             </button>
           </div>
@@ -30,7 +41,7 @@ const SignUpForm = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                     />
-                    <label for="floatingInput">First Name</label>
+                    <label>First Name</label>
                   </div>
                 </div>
 
@@ -42,7 +53,7 @@ const SignUpForm = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                     />
-                    <label for="floatingInput">Last Name</label>
+                    <label>Last Name</label>
                   </div>
                 </div>
               </div>
@@ -54,7 +65,7 @@ const SignUpForm = () => {
                   id="floatingInput"
                   placeholder="name@example.com"
                 />
-                <label for="floatingInput">Email address</label>
+                <label>Email address</label>
               </div>
 
               <div className="form-floating mb-3">
@@ -64,7 +75,7 @@ const SignUpForm = () => {
                   id="floatingPassword"
                   placeholder="Password"
                 />
-                <label for="floatingPassword">Password</label>
+                <label>Password</label>
               </div>
               <div className="checkbox mb-3">
                 <label>

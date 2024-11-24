@@ -2,17 +2,17 @@ import React from "react";
 import Layout from "../../layout";
 import { useForm } from "react-hook-form";
 import PageHelmet from "../Helmet";
-import { db } from "../../config/firebase-config";
-import { addDoc, collection } from "firebase/firestore";
+import { ToastContainer } from "react-toastify";
 
 const CompanyDetailsForm = () => {
+  // const [companyData, setCompanyData] = useState([]);
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
     try {
       // validate image file uploaded
       if (!data.company_logo || data.company_logo.length === 0) {
-        throw new Error("Plase upload a company logo");
+        return;
       }
 
       const file = data.company_logo[0];
@@ -24,8 +24,9 @@ const CompanyDetailsForm = () => {
         companyImg: companyImgUrl,
       };
 
-      // save data to firebase
-      await addDoc(collection(db, "company"), companyData);
+      // save data to localstorage
+      localStorage.setItem("companyData", JSON.stringify(companyData));
+      console.log("Submitted Data: ", localStorage.getItem("companyData"));
 
       reset();
     } catch (err) {
@@ -39,7 +40,7 @@ const CompanyDetailsForm = () => {
       <Layout>
         <div className="row justify-content-center align-items-center">
           <div className="col-lg-8 col-sm-12">
-            <h2>Add Company Info</h2>
+            <h2>Add Company Details</h2>
 
             <form
               className="card mt-3 py-4 px-4 shadow-sm"

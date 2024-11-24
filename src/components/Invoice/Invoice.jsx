@@ -14,9 +14,7 @@ const Invoice = ({
   invoiceNumber,
   billingAddress,
   invoiceData,
-  companyLogo,
-  companyName,
-  companyAddress,
+  companyData,
 }) => {
   const styles = StyleSheet.create({
     page: {
@@ -92,8 +90,8 @@ const Invoice = ({
   const InvoiceTitle = () => (
     <View style={styles.titleContainer}>
       <View style={styles.spaceBetween}>
-        <Image style={styles.logo} src={companyLogo} />
-        <Text style={styles.reportTitle}>{companyName}</Text>
+        <Image style={styles.logo} src={logo} />
+        <Text style={styles.reportTitle}>{companyData?.company_name}</Text>
       </View>
     </View>
   );
@@ -109,7 +107,9 @@ const Invoice = ({
           </Text>
         </View>
         <View>
-          <Text style={styles.addressTitle}>{companyAddress}</Text>
+          <Text style={styles.addressTitle}>
+            {companyData?.company_address}
+          </Text>
           {/* <Text style={styles.addressTitle}>Pinehill,</Text>
           <Text style={styles.addressTitle}>Auckland, New Zealand, 0632</Text> */}
         </View>

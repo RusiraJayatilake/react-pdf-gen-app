@@ -1,32 +1,20 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
-const useLocalStorageService = () => {
-  const [invoices, setInvoices] = useState(() => {
-    const savedInvoices = localStorage.getItem("invoices");
-    return savedInvoices ? JSON.parse(savedInvoices) : [];
-  });
+// export default function useLocalStorage(key, defaultValue) {
+//   const [value, setValue] = useState(() => {
+//     const storedValue = localStorage.getItem(key);
+//     if (storedValue) {
+//       return JSON.parse(storedValue);
+//     }
 
-  useEffect(() => {
-    localStorage.setItem("invoices", JSON.stringify(invoices));
-  }, [invoices]);
+//     return defaultValue;
+//   });
 
-  const addInvoice = (invoice) => {
-    setInvoices((prevInvoice) => [...prevInvoice, invoice]);
-  };
-
-  const updateInvoice = (invoiceUpdate) => {
-    const updatedInvoice = invoices.map((value) => {
-      value.id === invoiceUpdate.id ? invoiceUpdate : value;
-    });
-    setInvoices(updatedInvoice);
-  };
-
-  const deleteInvoice = (id) => {
-    const deletedInvoice = invoices.filter((value) => value.id !== id);
-    setInvoices(deletedInvoice);
-  };
-
-  return { addInvoice, updateInvoice, deleteInvoice };
-};
-
-export default useLocalStorageService;
+//   useEffect(() => {
+//     if (value === undefined) {
+//       return;
+//     } else {
+//       localStorage.setItem(key, JSON.stringify(value));
+//     }
+//   }, [value, setValue]);
+// }

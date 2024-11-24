@@ -14,13 +14,15 @@ import {
   HiOutlinePencil,
 } from "react-icons/hi";
 import { FiShare2 } from "react-icons/fi";
-import "../../assets/css/pdfCard.css";
 import PageHelmet from "../Helmet";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase-config";
+import "../../assets/css/pdfCard.css";
 
 const PdfCard = () => {
+  const [companyData, setCompanyData] = useState();
   const [pdfData, setPdfData] = useState([]);
+
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
@@ -32,15 +34,17 @@ const PdfCard = () => {
   //     )}&body=${encodeURIComponent(`Kindly find attached invoice`)}`;
   //   };
 
+  useEffect(() => {
+    const savedValues = localStorage.getItem("companyData");
+    const initValues = JSON.parse(savedValues);
+    if (initValues) {
+      setCompanyData(initValues);
+    }
+  }, []);
+
   const handleAddInvoiceButton = () => {
     navigate("/add-invoice");
   };
-
-  // Data extractions
-  //company data
-  // const company_logo = searchParams.get("companyImg");
-  const company_name = searchParams.get("company_name");
-  const company_address = searchParams.get("company_address");
 
   // invoice data
   const date = searchParams.get("date");
@@ -48,24 +52,25 @@ const PdfCard = () => {
   const billing_address = searchParams.get("billing_address");
   const invoiceItems = JSON.parse(searchParams.get("invoiceItems") || "[]");
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "company"));
-        const newData = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
+  // firestore
+  // useEffect(() => {
+  //   const fetchPDFData = async () => {
+  //     try {
+  //       const querySnapshot = await getDocs(collection(db, "pdf"));
+  //       const newData = querySnapshot.docs.map((doc) => ({
+  //         ...doc.data(),
+  //         id: doc.id,
+  //       }));
 
-        setPdfData(newData);
-        console.log("Fetched pdf:", newData);
-      } catch (error) {
-        console.error("Error fetching pdf data:", error);
-      }
-    };
+  //       setPdfData(newData);
+  //       console.log("Fetched pdf:", newData);
+  //     } catch (error) {
+  //       console.error("Error fetching pdf data:", error);
+  //     }
+  //   };
 
-    fetchPost();
-  }, []);
+  //   fetchPDFData();
+  // }, []);
 
   return (
     <>
@@ -84,21 +89,14 @@ const PdfCard = () => {
             >
               <div className="card-body">
                 {/* PDF Preview */}
-                {pdfData.map((value) => (
-                  <img src={value.companyImg} alt="Image" />
-                ))}
-
                 <div>
-                  <BlobProvider
+                  {/* <BlobProvider
                     document={
                       <Invoice
                         date={date}
                         invoiceNumber={invoice_number}
                         billingAddress={billing_address}
                         invoiceData={invoiceItems}
-                        // companyLogo={company_logo}
-                        companyName={company_name}
-                        companyAddress={company_address}
                       />
                     }
                     className="pdf-viewer"
@@ -108,19 +106,18 @@ const PdfCard = () => {
                       if (error) return <p>Error Loading!</p>;
                       return (
                         <img
-                          src={url}
+                          src={""}
                           alt="pdf preview"
                           style={{ width: "100%", height: "auto" }}
                         />
                       );
                     }}
-                  </BlobProvider>
+                  </BlobProvider> */}
                 </div>
                 {/* Title */}
                 <h6 className="card-title mt-4">
                   Created At: {new Date().toLocaleDateString()}
                 </h6>
-
                 <div className="d-flex justify-content-between">
                   <div className="d-flex gap-2">
                     {/* Download */}
@@ -131,9 +128,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          // companyLogo={company_logo}
-                          companyName={company_name}
-                          companyAddress={company_address}
+                          companyData={companyData}
                         />
                       }
                       fileName="invoice.pdf"
@@ -151,9 +146,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          // companyLogo={company_logo}
-                          companyName={company_name}
-                          companyAddress={company_address}
+                          companyData={companyData}
                         />
                       }
                     >
@@ -176,9 +169,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          // companyLogo={company_logo}
-                          companyName={company_name}
-                          companyAddress={company_address}
+                          companyData={companyData}
                         />
                       }
                     >
@@ -197,9 +188,7 @@ const PdfCard = () => {
                           invoiceNumber={invoice_number}
                           billingAddress={billing_address}
                           invoiceData={invoiceItems}
-                          // companyLogo={company_logo}
-                          companyName={company_name}
-                          companyAddress={company_address}
+                          companyData={companyData}
                         />
                       }
                     >
